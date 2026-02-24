@@ -269,8 +269,14 @@ public class PasswordManager implements ActionListener {
         //loading screen class
         new SplashScreen();
         try {
+            // Try to use JTattoo look and feel if available
             UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
-            new PasswordManager();
-        }catch (Exception ex) { ex.printStackTrace(); }
+        } catch (Exception ex) {
+            // Fall back to system look and feel when JTattoo is not present
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception ignored) { }
+        }
+        new PasswordManager();
  }
 }
