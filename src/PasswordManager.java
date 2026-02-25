@@ -120,13 +120,17 @@ public class PasswordManager implements ActionListener {
 
         conn1 = frame.getContentPane();
         ContainerGUI(conn1);
+        conn1.setLayout(new GridBagLayout());
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setOpaque(false);
+        buttonsPanel.setLayout(new GridLayout(5,1,0,20));
 
 
         //Generator buttons settings
         PassGeneBtn = new JButton("GENERATE PASSWORD");
-        PassGeneBtn.setBounds(160, 80, 220, 70);
-        conn1.add(PassGeneBtn);
         GUIButtonsSetting(PassGeneBtn);
+        buttonsPanel.add(PassGeneBtn);
 //----------------------------------------------------------------------------------------------------------------------
         //generating password
         PassGeneBtn.addActionListener(e -> {
@@ -155,8 +159,7 @@ public class PasswordManager implements ActionListener {
         //Encryption Button
         PassEncryptBtn = new JButton("ENCRYPT PASSWORD");
         GUIButtonsSetting(PassEncryptBtn);
-        PassEncryptBtn.setBounds(160, 180, 220, 70);
-        conn1.add(PassEncryptBtn);
+        buttonsPanel.add(PassEncryptBtn);
         PassEncryptBtn.addActionListener(e -> {
                     if (PassEncryptBtn == e.getSource()) {
                         try {
@@ -180,9 +183,8 @@ public class PasswordManager implements ActionListener {
 
         //storing password using hashtable
         PassStoreBtn = new JButton("STORE PASSWORD");
-        PassStoreBtn.setBounds(160, 280, 220, 70);
-        conn1.add(PassStoreBtn);
         GUIButtonsSetting(PassStoreBtn);
+        buttonsPanel.add(PassStoreBtn);
         //Store password action
         PassStoreBtn.addActionListener(e -> {
             if(PassStoreBtn ==e.getSource())
@@ -217,8 +219,7 @@ public class PasswordManager implements ActionListener {
         //searching password
         PassSearchBtn = new JButton("SEARCH PASSWORD");
         GUIButtonsSetting(PassSearchBtn);
-        PassSearchBtn.setBounds(160, 380, 220, 70);
-        conn1.add(PassSearchBtn);
+        buttonsPanel.add(PassSearchBtn);
         PassSearchBtn.addActionListener(e ->{
             if (PassSearchBtn ==e.getSource()){
                 try{
@@ -243,8 +244,14 @@ public class PasswordManager implements ActionListener {
         // deleting password
         PassDeleteBtn = new JButton("DELETE PASSWORD");
         GUIButtonsSetting(PassDeleteBtn);
-        PassDeleteBtn.setBounds(160, 480, 220, 70);
-        conn1.add(PassDeleteBtn);
+        buttonsPanel.add(PassDeleteBtn);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        conn1.add(buttonsPanel, gbc);
         PassDeleteBtn.addActionListener(e -> {
             if (PassDeleteBtn == e.getSource()) {
                 try {
