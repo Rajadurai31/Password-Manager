@@ -12,6 +12,7 @@ public class HashtablePassword implements hashTableMap {
             key = k;    value = v;
         }
     }
+
     public HashtablePassword(int capacity, float loadFactor, int useProbe){
         entries = new Entry[capacity];
         this.loadFactor = loadFactor;
@@ -19,7 +20,7 @@ public class HashtablePassword implements hashTableMap {
     }
 
 
-    //Complementary functions
+  
     public int hash(Object key){
         return (key.hashCode() & 0x7FFFFFFF) % entries.length;
     }
