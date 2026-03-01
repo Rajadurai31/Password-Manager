@@ -134,27 +134,35 @@ public class PasswordManager implements ActionListener {
 //----------------------------------------------------------------------------------------------------------------------
         //generating password
         PassGeneBtn.addActionListener(e -> {
-        if(PassGeneBtn ==e.getSource())
-        {
-            try{
-                int len = Integer.parseInt(JOptionPane.showInputDialog("Enter the password length"));
-                if(len>8)
-                {
-                    //  password generator class reference
-                    PasswordGenerator pass = new PasswordGenerator();
-                    String passwd = pass.generatePassword(len);
-                    genePassArea = new JTextArea(5,4);
-                    textArea(passwd,genePassArea);
-                    JOptionPane.showMessageDialog(conn1,new JScrollPane(genePassArea),"Copy your password",JOptionPane.INFORMATION_MESSAGE);
+            if (PassGeneBtn == e.getSource()) {
+                try {
+                    String lenInput = JOptionPane.showInputDialog("Enter the password length");
+                    // If user pressed Cancel or closed dialog, do nothing
+                    if (lenInput == null) {
+                        return;
+                    }
+                    lenInput = lenInput.trim();
+                    if (lenInput.isEmpty()) {
+                        return;
+                    }
+                    int len = Integer.parseInt(lenInput);
+                    if (len > 8) {
+                        //  password generator class reference
+                        PasswordGenerator pass = new PasswordGenerator();
+                        String passwd = pass.generatePassword(len);
+                        genePassArea = new JTextArea(5, 4);
+                        textArea(passwd, genePassArea);
+                        JOptionPane.showMessageDialog(conn1, new JScrollPane(genePassArea), "Copy your password", JOptionPane.INFORMATION_MESSAGE);
 
+                    } else {
+                        JOptionPane.showMessageDialog(conn1, "Password length must be greater than 8!", "Invalid Input Error", JOptionPane.WARNING_MESSAGE);
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(conn1, ex.getMessage(), "EXIT!", JOptionPane.ERROR_MESSAGE);
                 }
-                else JOptionPane.showMessageDialog (conn1,"Password length must be greater than 8!","Invalid Input Error",JOptionPane.WARNING_MESSAGE);
-
             }
-            catch(Exception ex){JOptionPane.showMessageDialog(conn1,ex.getMessage(),"EXIT!",JOptionPane.ERROR_MESSAGE);}
-        }
-    }
-    );
+        });
  //----------------------------------------------------------------------------------------------------------------------
         //Encryption Button
         PassEncryptBtn = new JButton("ENCRYPT PASSWORD");
@@ -164,6 +172,10 @@ public class PasswordManager implements ActionListener {
                     if (PassEncryptBtn == e.getSource()) {
                         try {
                             String simplePasswd = JOptionPane.showInputDialog("Enter your Password");
+                            // If user pressed Cancel or closed dialog, do nothing
+                            if (simplePasswd == null) {
+                                return;
+                            }
                             if (!simplePasswd.isEmpty()) {
                                 byte[] salt = passwordEncryption.getSalt();
                                 String encPass = passwordEncryption.get_SHA_1_SecurePassword(simplePasswd, salt);
@@ -171,7 +183,9 @@ public class PasswordManager implements ActionListener {
                                 encryptPasswdArea = new JTextArea(7, 4);
                                 textArea(encPass, encryptPasswdArea);
                                 JOptionPane.showMessageDialog(conn1, new JScrollPane(encryptPasswdArea), "Copy your Encrypted password", JOptionPane.INFORMATION_MESSAGE);
-                            } else JOptionPane.showMessageDialog(conn1, "Please enter password!");
+                            } else {
+                                JOptionPane.showMessageDialog(conn1, "Please enter password!");
+                            }
                         } catch (Exception ex) {
                             JOptionPane.showMessageDialog(conn1, ex.getMessage(), "EXIT", JOptionPane.ERROR_MESSAGE);
                         }
@@ -224,6 +238,10 @@ public class PasswordManager implements ActionListener {
             if (PassSearchBtn ==e.getSource()){
                 try{
                     String acc_name = JOptionPane.showInputDialog("Enter your Account Name");
+                    // If user pressed Cancel or closed dialog, do nothing
+                    if (acc_name == null) {
+                        return;
+                    }
                     if (!acc_name.isBlank()) {
                         Object pass = data.get_Acc(acc_name.toLowerCase());
                         if(pass!=null) {
@@ -256,6 +274,10 @@ public class PasswordManager implements ActionListener {
             if (PassDeleteBtn == e.getSource()) {
                 try {
                     String acc_name = JOptionPane.showInputDialog("Enter the Account Name");
+                    // If user pressed Cancel or closed dialog, do nothing
+                    if (acc_name == null) {
+                        return;
+                    }
                     if (!acc_name.isBlank()) {
                         data.remove_Acc(acc_name.toLowerCase());
                         JOptionPane.showMessageDialog(conn1, "Delete successfully!");
